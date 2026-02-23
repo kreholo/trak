@@ -168,113 +168,87 @@
         </section>
     </main>
 
-    <script>
-        // 1. Kategori Bağlantıları (Ana Kategoriye göre Alt Kategori listeleme)
-        const altKategoriler = {
-            "Edirne": ["Edirne Hakkında", "Coğrafi İşaretli Ürünler", "Edirne Lezzet Durakları", "Et Yemekleri", "Sebze Yemekleri", "Hamur İşleri", "Pilavlar", "Salatalar ve Mezeler", "Tatlılar", "İçecekler"],
-            "Tekirdağ": ["Tekirdağ Hakkında", "Coğrafi İşaretli Ürünler", "Tekirdağ Lezzet Durakları", "Et Yemekleri", "Sebze Yemekleri", "Hamur İşleri", "Pilavlar", "Salatalar ve Mezeler", "Tatlılar", "İçecekler"],
-            "Kırklareli": ["Kırklareli Hakkında", "Coğrafi İşaretli Ürünler", "Kırklareli Lezzet Durakları", "Et Yemekleri", "Sebze Yemekleri", "Hamur İşleri", "Pilavlar", "Salatalar ve Mezeler", "Tatlılar", "İçecekler"],
-            "Çanakkale": ["Çanakkale Hakkında", "Coğrafi İşaretli Ürünler", "Çanakkale Lezzet Durakları", "Et Yemekleri", "Sebze Yemekleri", "Hamur İşleri", "Pilavlar", "Salatalar ve Mezeler", "Tatlılar", "İçecekler"],
-            "Sakin_Sehirler": ["Sakin Şehirler Hakkında", "Sakin Şehirler Lezzet Durakları", "Et Yemekleri", "Sebze Yemekleri", "Hamur İşleri", "Pilavlar", "Salatalar ve Mezeler", "Tatlılar", "İçecekler"],
-            "Turk_Mutfagi": ["Türk Mutfağı Hakkında", "Coğrafi İşaretli Ürünler", "Lezzet Durakları", "Et Yemekleri", "Sebze Yemekleri", "Hamur İşleri", "Pilavlar", "Salatalar ve Mezeler", "Tatlılar", "İçecekler"],
-            "Dunya_Mutfagi": ["Et Yemekleri", "Sebze Yemekleri", "Hamur İşleri", "Pilavlar", "Salatalar ve Mezeler", "Tatlılar", "İçecekler"]
+  <script type="module">
+    // 1. Firebase Kütüphanelerini İçe Aktar
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+    // 2. KENDİ FİREBASE BİLGİLERİNİ BURAYA YAPIŞTIR
+    const firebaseConfig = {
+        apiKey: "SENİN_API_KEYİN",
+        authDomain: "proje-adin.firebaseapp.com",
+        projectId: "proje-adin",
+        storageBucket: "proje-adin.appspot.com",
+        messagingSenderId: "123456789",
+        appId: "SENİN_APP_ID"
+    };
+
+    // Firebase'i Başlat
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Daha önceki alt kategori getirme vb. fonksiyonlar (Aynı kalacak, modül içinde pencereye (window) bağlamamız lazım ki HTML'deki onclick çalışsın)
+    window.altKategoriGetir = function() {
+        // ... (Eski koddaki altKategoriGetir fonksiyonunun içeriğini buraya koy)
+    };
+
+    window.yeniYaziAlaniEkle = function() {
+        // ... (Eski koddaki yeniYaziAlaniEkle fonksiyonunun içeriğini buraya koy)
+    };
+
+    window.blokuSil = function(blokId) {
+        document.getElementById(blokId).remove();
+    };
+
+    window.dosyaSecildi = function(input) {
+        if (input.files && input.files[0]) {
+            document.getElementById('dosyaIsmi').innerText = "Seçilen Dosya: " + input.files[0].name;
+        }
+    };
+
+    // 3. Verileri Firestore'a Kaydetme Fonksiyonu
+    window.veritabaninaKaydet = async function() {
+        const anaKategori = document.getElementById("anaKategori").value;
+        const altKategori = document.getElementById("altKategori").value;
+        const baslik = document.getElementById("baslik").value;
+        const anaMetin = document.getElementById("anaMetin").value;
+
+        if(!anaKategori || !baslik) {
+            alert("Lütfen Ana Kategori ve Başlık alanlarını doldurun!");
+            return;
+        }
+
+        let ekstraBolumler = [];
+        document.querySelectorAll('.dynamic-block').forEach(blok => {
+            ekstraBolumler.push({
+                altBaslik: blok.querySelector('.dinamik-baslik').value,
+                icerik: blok.querySelector('.dinamik-metin').value
+            });
+        });
+
+        const veriPaketi = {
+            kategori: anaKategori,
+            alt_kategori: altKategori,
+            baslik: baslik,
+            gorsel_url: document.getElementById("gorselUrl").value,
+            ana_metin: anaMetin,
+            link: document.getElementById("mekanLinki").value,
+            ekstra_icerikler: ekstraBolumler,
+            tarih: new Date().toISOString()
         };
 
-        function altKategoriGetir() {
-            const anaSelect = document.getElementById("anaKategori").value;
-            const altSelect = document.getElementById("altKategori");
-            
-            altSelect.innerHTML = ""; // İçeriği temizle
-
-            if (anaSelect && altKategoriler[anaSelect]) {
-                altKategoriler[anaSelect].forEach(item => {
-                    let option = document.createElement("option");
-                    option.value = item;
-                    option.text = item;
-                    altSelect.appendChild(option);
-                });
-            } else {
-                altSelect.innerHTML = '<option value="">Önce Ana Kategori Seçin</option>';
-            }
-        }
-
-        // 2. Dinamik Yazı Alanı Ekleme (Örn: Tarifi, Malzemeler, Hazırlanışı gibi ekstra bölümler için)
-        let blokSayaci = 0;
-        function yeniYaziAlaniEkle() {
-            blokSayaci++;
-            const container = document.getElementById("dinamikAlanlar");
-            
-            const div = document.createElement("div");
-            div.className = "dynamic-block";
-            div.id = "blok_" + blokSayaci;
-            
-            div.innerHTML = `
-                <button type="button" class="remove-block-btn" onclick="blokuSil('blok_${blokSayaci}')">✖ Sil</button>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label>Alt Başlık (Örn: Malzemeler, Hazırlanışı vb.)</label>
-                    <input type="text" class="dinamik-baslik" placeholder="Alt başlık girin...">
-                </div>
-                <div class="form-group">
-                    <label>Detaylı Yazı</label>
-                    <textarea class="dinamik-metin" placeholder="Bu bölüme ait detayları yazın..." style="min-height: 80px;"></textarea>
-                </div>
-            `;
-            
-            container.appendChild(div);
-        }
-
-        function blokuSil(blokId) {
-            document.getElementById(blokId).remove();
-        }
-
-        // 3. Dosya Seçildiğinde İsmini Gösterme
-        function dosyaSecildi(input) {
-            if (input.files && input.files[0]) {
-                document.getElementById('dosyaIsmi').innerText = "Seçilen Dosya: " + input.files[0].name;
-            }
-        }
-
-        // 4. Verileri Toplayıp Gönderme (Firebase Simülasyonu)
-        function veritabaninaKaydet() {
-            const anaKategori = document.getElementById("anaKategori").value;
-            const altKategori = document.getElementById("altKategori").value;
-            const baslik = document.getElementById("baslik").value;
-            const anaMetin = document.getElementById("anaMetin").value;
-
-            if(!anaKategori || !baslik) {
-                alert("Lütfen Ana Kategori ve Başlık alanlarını doldurun!");
-                return;
-            }
-
-            // Dinamik alanlardaki verileri topla
-            let ekstraBolumler = [];
-            document.querySelectorAll('.dynamic-block').forEach(blok => {
-                let dBaslik = blok.querySelector('.dinamik-baslik').value;
-                let dMetin = blok.querySelector('.dinamik-metin').value;
-                ekstraBolumler.push({ altBaslik: dBaslik, icerik: dMetin });
-            });
-
-            // Gönderilecek Veri Paketi (JSON Formatı)
-            const veriPaketi = {
-                kategori: anaKategori,
-                alt_kategori: altKategori,
-                baslik: baslik,
-                gorsel_url: document.getElementById("gorselUrl").value,
-                ana_metin: anaMetin,
-                link: document.getElementById("mekanLinki").value,
-                ekstra_icerikler: ekstraBolumler,
-                tarih: new Date().toISOString()
-            };
-
-            // Burada normalde fetch() ile Firebase'e POST isteği atılır.
-            console.log("Firebase'e Gönderilecek JSON Verisi:", veriPaketi);
-            alert("✅ Başarılı!\n\nİçerik başarıyla kaydedildi. Konsolu (F12) açarak Firebase'e gidecek JSON formatındaki veri paketini görebilirsiniz.");
-            
-            // Formu temizle
+        try {
+            // "icerikler" adında bir koleksiyona veriyi ekle
+            const docRef = await addDoc(collection(db, "icerikler"), veriPaketi);
+            alert("✅ İçerik Başarıyla Veritabanına Eklendi! ID: " + docRef.id);
             document.getElementById("icerikFormu").reset();
             document.getElementById("dinamikAlanlar").innerHTML = "";
-            document.getElementById('dosyaIsmi').innerText = "Bilgisayardan Görsel Seç (Opsiyonel)";
+        } catch (e) {
+            console.error("Hata oluştu: ", e);
+            alert("Hata: İçerik eklenemedi.");
         }
-    </script>
+    };
+</script>
+
 </body>
 </html>
