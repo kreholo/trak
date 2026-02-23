@@ -444,64 +444,106 @@
     <footer>
         <p>&copy; 2026 Trakya Mutfağı ve Lezzet Durakları. Tüm Hakları Saklıdır.</p>
     </footer>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+    import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-    <script>
-        const heroSection = document.getElementById('hero-section');
-        const contentSection = document.getElementById('content-section');
-        const baslikAlani = document.getElementById('baslik');
-        const icerikAlani = document.getElementById('icerik');
-        const breadcrumbAlani = document.getElementById('breadcrumb');
-        const dbBilgiAlani = document.getElementById('db-bilgi');
+    const firebaseConfig = {
 
-        function icerikGetir(anaKategori, altKategori) {
-            // Hero alanını daraltıp arka plana al
-            heroSection.style.height = '30vh';
-            heroSection.querySelector('h1').style.fontSize = '36px';
-            heroSection.querySelector('p').style.display = 'none';
-            heroSection.querySelector('button').style.display = 'none';
+  apiKey: "AIzaSyDKWEvPGCcjecP-r4MceBudchDRX2QdaJA",
 
-            // İçerik kutusunu görünür yap
-            contentSection.style.display = 'block';
+  authDomain: "trakya-42e32.firebaseapp.com",
 
-            // Başlık ve Breadcrumb güncelle
-            breadcrumbAlani.innerText = "Trakya Mutfağı / " + anaKategori + " / " + altKategori;
-            baslikAlani.innerText = altKategori;
+  projectId: "trakya-42e32",
 
-            // İçeriği güncelle
-            icerikAlani.innerHTML = `
-                <p>Şu anda veri tabanına bağlanarak <strong>${anaKategori}</strong> kategorisi altındaki <strong>${altKategori}</strong> verilerini listeliyorsunuz.</p>
-                <p>Arayüz tamamen hazırlandı ve kullanıcının seçimine göre tepki veriyor. Firebase entegrasyonu tamamlandığında, burası dinamik olarak dolacaktır.</p>
-                <br>
-                <div style="text-align: center; padding: 40px; border: 2px dashed #bdc3c7; border-radius: 10px; color: #7f8c8d;">
-                    <i>[ Veritabanı İçerikleri Buraya Gelecek ]<br>Örnek: Fotoğraflar, Makaleler, Google Maps Linkleri...</i>
-                </div>
-            `;
+  storageBucket: "trakya-42e32.firebasestorage.app",
 
-            // Geliştirici notunu göster
-            dbBilgiAlani.style.display = 'block';
+  messagingSenderId: "597076769834",
 
-            // Sayfayı yumuşak bir şekilde içerik kısmına kaydır
-            window.scrollTo({
-                top: contentSection.offsetTop - 150,
-                behavior: 'smooth'
+  appId: "1:597076769834:web:09b473538bd2b6b30bd753",
+
+  measurementId: "G-R8SJWP5TSC"
+
+};
+
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const heroSection = document.getElementById('hero-section');
+    const contentSection = document.getElementById('content-section');
+    const baslikAlani = document.getElementById('baslik');
+    const icerikAlani = document.getElementById('icerik');
+    const breadcrumbAlani = document.getElementById('breadcrumb');
+
+    window.anaSayfayaDon = function() {
+        heroSection.style.height = '70vh';
+        heroSection.querySelector('h1').style.fontSize = '64px';
+        heroSection.querySelector('p').style.display = 'block';
+        heroSection.querySelector('button').style.display = 'inline-block';
+        contentSection.style.display = 'none';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    // Veritabanından İçerik Çekme
+    window.icerikGetir = async function(anaKategori, altKategori) {
+        heroSection.style.height = '30vh';
+        heroSection.querySelector('h1').style.fontSize = '36px';
+        heroSection.querySelector('p').style.display = 'none';
+        heroSection.querySelector('button').style.display = 'none';
+        contentSection.style.display = 'block';
+
+        breadcrumbAlani.innerText = "Trakya Mutfağı / " + anaKategori + " / " + altKategori;
+        baslikAlani.innerText = altKategori;
+        icerikAlani.innerHTML = "<p>Veriler yükleniyor...</p>";
+
+        try {
+            // İlgili kategoriye ait verileri Firebase'den sorgula
+            const q = query(collection(db, "icerikler"), where("kategori", "==", anaKategori), where("alt_kategori", "==", altKategori));
+            const querySnapshot = await getDocs(q);
+
+            if (querySnapshot.empty) {
+                icerikAlani.innerHTML = "<p>Bu kategoriye henüz içerik eklenmemiş.</p>";
+                return;
+            }
+
+            let htmlIcerik = "";
+            querySnapshot.forEach((doc) => {
+                const veri = doc.data();
+                htmlIcerik += `<div style="margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid #eee;">`;
+                htmlIcerik += `<h3 style="color:#c0392b; font-size:24px; margin-bottom:10px;">${veri.baslik}</h3>`;
+                
+                if(veri.gorsel_url) {
+                    htmlIcerik += `<img src="${veri.gorsel_url}" style="max-width:100%; border-radius:8px; margin-bottom:15px;">`;
+                }
+                
+                htmlIcerik += `<p style="font-size:16px; line-height:1.8;">${veri.ana_metin}</p>`;
+
+                // Dinamik olarak eklenen alt başlıkları ve metinleri listele
+                if(veri.ekstra_icerikler && veri.ekstra_icerikler.length > 0) {
+                    veri.ekstra_icerikler.forEach(ekstra => {
+                        htmlIcerik += `<h4 style="color:#2980b9; margin-top:20px;">${ekstra.altBaslik}</h4>`;
+                        htmlIcerik += `<p>${ekstra.icerik}</p>`;
+                    });
+                }
+
+                if(veri.link) {
+                    htmlIcerik += `<a href="${veri.link}" target="_blank" style="display:inline-block; margin-top:15px; padding:10px 20px; background:#e67e22; color:white; text-decoration:none; border-radius:5px;">Haritada/Sitede Gör</a>`;
+                }
+                
+                htmlIcerik += `</div>`;
             });
+
+            icerikAlani.innerHTML = htmlIcerik;
+
+        } catch (error) {
+            console.error("Veri çekme hatası:", error);
+            icerikAlani.innerHTML = "<p>Veriler yüklenirken bir hata oluştu.</p>";
         }
 
-        function anaSayfayaDon() {
-            // Hero alanını eski haline getir
-            heroSection.style.height = '70vh';
-            heroSection.querySelector('h1').style.fontSize = '64px';
-            heroSection.querySelector('p').style.display = 'block';
-            heroSection.querySelector('button').style.display = 'inline-block';
+        window.scrollTo({ top: contentSection.offsetTop - 150, behavior: 'smooth' });
+    };
+</script>
 
-            // İçerik alanını gizle
-            contentSection.style.display = 'none';
-            
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
-    </script>
 </body>
 </html>
