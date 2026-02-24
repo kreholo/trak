@@ -23,12 +23,15 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--light-bg);
-            color: var(--text-color);
-            overflow-x: hidden;
-        }
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--light-bg);
+    color: var(--text-color);
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
 
         /* --- HEADER & NAVBAR --- */
         header {
@@ -249,6 +252,7 @@
 
         /* --- HERO SECTION (ANASAYFA GÖRÜNÜMÜ) --- */
         .hero {
+            flex-grow: 1;
             height: 70vh;
             background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(192, 57, 43, 0.8)), url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat fixed;
             display: flex;
@@ -370,6 +374,14 @@
             padding: 30px 20px;
             margin-top: auto;
         }
+        /* TELEFONLAR İÇİN MENÜ KAYMA DÜZELTMESİ */
+@media (max-width: 768px) {
+    nav { flex-direction: column; }
+    .menu-item { width: 100%; border-bottom: 1px solid #34495e; }
+    .dropdown { position: static !important; width: 100%; display: none; box-shadow: none; transform: none !important;}
+    .dropdown-submenu { position: static !important; width: 100%; display: none; border-left: 3px solid #e74c3c; box-shadow: none; transform: none !important;}
+    .menu-item:hover > .dropdown, .dropdown li:hover > .dropdown-submenu { display: block; opacity: 1; visibility: visible; }
+}
     </style>
 </head>
 <body>
@@ -424,7 +436,7 @@
             </ul>
 
             <ul class="menu-item">
-                <a class="menu-link" style="color: #f1c40f;" onclick="window.toggleDropdown(event, this)">Kırklareli</a>
+                <a class="menu-link" onclick="window.toggleDropdown(event, this)">Kırklareli</a>
                 <ul class="dropdown">
                     <li><a onclick="window.icerikGetir('Kırklareli', 'Kırklareli Hakkında')">Kırklareli Hakkında</a></li>
                     <li><a onclick="window.icerikGetir('Kırklareli', 'Coğrafi İşaretli Ürünler')">Coğrafi İşaretli Ürünler</a></li>
@@ -605,7 +617,7 @@
 
             heroSection.style.height = '30vh';
             heroSection.querySelector('h1').style.fontSize = '36px';
-            heroSection.querySelector('p').style.display = 'none';
+            heroSection.querySelector('p').style.display = 'none'; 
             heroSection.querySelector('button').style.display = 'none';
             contentSection.style.display = 'block';
 
