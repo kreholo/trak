@@ -26,7 +26,6 @@
         body {
             font-family: 'Poppins', sans-serif;
             background-color: var(--light-bg);
-            /* Arka plan deseni/resmi buraya eklendi. Göz yormayan hafif bir doku. */
             background-image: url('https://www.transparenttextures.com/patterns/food.png'); 
             background-attachment: fixed;
             color: var(--text-color);
@@ -57,7 +56,6 @@
             font-weight: bold;
         }
 
-        /* Mobil Menü Butonu (Sadece telefonda görünür) */
         .mobile-menu-btn {
             display: none;
             background-color: var(--darker-bg);
@@ -129,6 +127,8 @@
                 left: 100%;
                 background-color: var(--darker-bg);
                 min-width: 240px;
+                max-height: 70vh;
+                overflow-y: auto;
                 opacity: 0;
                 visibility: hidden;
                 transform: translateX(10px);
@@ -136,6 +136,11 @@
                 box-shadow: 4px 4px 12px rgba(0,0,0,0.2);
                 border-left: 3px solid var(--secondary-color);
             }
+            
+            /* Uzun menüler için kaydırma çubuğu tasarımı */
+            .dropdown-submenu::-webkit-scrollbar { width: 6px; }
+            .dropdown-submenu::-webkit-scrollbar-track { background: var(--dark-bg); }
+            .dropdown-submenu::-webkit-scrollbar-thumb { background: var(--primary-color); border-radius: 10px; }
 
             .dropdown li:hover > .dropdown-submenu {
                 opacity: 1;
@@ -174,9 +179,7 @@
             font-size: 18px;
         }
 
-        /* --- YENİ EKLENEN CSS KODLARI (FOTO VE BUTON) --- */
-        
-        /* Fotoğraf Düzenleri */
+        /* --- FOTOĞRAF VE BUTON DÜZENLERİ --- */
         .foto-container { margin-bottom: 20px; overflow: hidden; }
         .foto-tam { width: 100%; height: auto; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .foto-orta { display: block; max-width: 80%; margin: 0 auto 15px auto; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
@@ -184,17 +187,12 @@
         .foto-sag { float: right; max-width: 45%; margin: 0 0 15px 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .foto-ikili-container { display: flex; gap: 20px; margin-bottom: 15px; }
         .foto-ikili { width: calc(50% - 10px); height: 250px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-
-        /* Temizleyici (Float kullanan fotoların altındaki elemanların kaymasını önler) */
         .clearfix::after { content: ""; display: table; clear: both; }
 
-        /* Buton Grubu */
         .btn-grup { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 25px; }
         .ozel-btn { padding: 12px 25px; color: white; font-weight: 500; text-decoration: none; border-radius: 8px; transition: 0.3s; display: inline-block; text-align: center; }
         .ozel-btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); filter: brightness(1.1); }
-
-
-        /* MOBİL UYUMLULUK (TELEFONLAR İÇİN) */
+        /* MOBİL UYUMLULUK */
         @media (max-width: 768px) {
             .mobile-menu-btn {
                 display: block;
@@ -266,6 +264,7 @@
                 border-left: 3px solid var(--secondary-color);
                 background-color: #16212b;
                 margin-top: 0;
+                max-height: none;
             }
             
             .dropdown li.mobile-open > .dropdown-submenu {
@@ -407,7 +406,7 @@
         }
     </style>
 </head>
-    <body>
+<body>
 
     <header>
         <div class="top-bar" onclick="window.anaSayfayaDon()">
@@ -504,17 +503,37 @@
                 <a class="menu-link" onclick="window.toggleDropdown(event, this)">Sakin Şehirler</a>
                 <ul class="dropdown">
                     <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Sakin Şehirler Hakkında')">Sakin Şehirler Hakkında</a></li>
-                    <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Sakin Şehirler Lezzet Durakları')">Sakin Şehirler Lezzet Durakları</a></li>
                     <li>
-                        <a class="sub-menu-indicator" onclick="window.toggleSubmenu(event, this)">Sakin Şehir Mutfağı</a>
+                        <a class="sub-menu-indicator" onclick="window.toggleSubmenu(event, this)">Sakin Şehirler</a>
                         <ul class="dropdown-submenu">
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Et Yemekleri')">Et Yemekleri</a></li>
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Sebze Yemekleri')">Sebze Yemekleri</a></li>
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Hamur İşleri')">Hamur İşleri</a></li>
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Pilavlar')">Pilavlar</a></li>
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Salatalar ve Mezeler')">Salatalar ve Mezeler</a></li>
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Tatlılar')">Tatlılar</a></li>
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'İçecekler')">İçecekler</a></li>
+                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Gökçeada, Çanakkale')">Gökçeada, Çanakkale</a></li>
+                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Foça, İzmir')">Foça, İzmir</a></li>
+                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Seferihisar, İzmir')">Seferihisar, İzmir</a></li>
+                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Şarköy, Tekirdağ')">Şarköy, Tekirdağ</a></li>
+                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Vize, Kırklareli')">Vize, Kırklareli</a></li>
+                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Yenipazar, Aydın')">Yenipazar, Aydın</a></li>
+                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Akyaka, Muğla')">Akyaka, Muğla</a></li>
+                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Köyceğiz, Muğla')">Köyceğiz, Muğla</a></li>
+                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Çameli, Denizli')">Çameli, Denizli</a></li>
+                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'İznik, Bursa')">İznik, Bursa</a></li>
+                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Demre, Antalya')">Demre, Antalya</a></li>
+                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Finike, Antalya')">Finike, Antalya</a></li>
+                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Göynük, Bolu')">Göynük, Bolu</a></li>
+                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Mudurnu, Bolu')">Mudurnu, Bolu</a></li>
+                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Yalvaç, Isparta')">Yalvaç, Isparta</a></li>
+                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'İbradı, Antalya')">İbradı, Antalya</a></li>
+                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Eğirdir, Isparta')">Eğirdir, Isparta</a></li>
+                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Güdül, Ankara')">Güdül, Ankara</a></li>
+                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Safranbolu, Karabük')">Safranbolu, Karabük</a></li>
+                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Daday, Kastamonu')">Daday, Kastamonu</a></li>
+                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Gerze, Sinop')">Gerze, Sinop</a></li>
+                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Perşembe, Ordu')">Perşembe, Ordu</a></li>
+                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Halfeti, Şanlıurfa')">Halfeti, Şanlıurfa</a></li>
+                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Arapgir, Malatya')">Arapgir, Malatya</a></li>
+                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Kemaliye, Erzincan')">Kemaliye, Erzincan</a></li>
+                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Uzundere, Erzurum')">Uzundere, Erzurum</a></li>
+                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Şavşat, Artvin')">Şavşat, Artvin</a></li>
+                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Ahlat, Bitlis')">Ahlat, Bitlis</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -585,7 +604,7 @@
     <footer>
         <p>&copy; 2026 Trakya Mutfağı ve Lezzet Durakları. Tüm Hakları Saklıdır.</p>
     </footer>
-        <script type="module">
+    <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
@@ -632,7 +651,7 @@
             location.reload();
         };
 
-        // VERİ ÇEKME VE GÖSTERME SİHRİ
+        // VERİ ÇEKME VE GÖSTERME (MODÜLER SİSTEM)
         window.icerikGetir = async function(anaKategori, altKategori) {
             // Mobilde menüyü kapat
             if (window.innerWidth <= 768) {
@@ -648,7 +667,8 @@
             heroSection.querySelector('button').style.display = 'none';
             contentSection.style.display = 'block';
 
-            breadcrumbAlani.innerText = "Trakya Mutfağı / " + anaKategori + " / " + altKategori;
+            let gosterilenAnaKategori = anaKategori.replace(/_/g, ' ');
+            breadcrumbAlani.innerText = "Trakya Mutfağı / " + gosterilenAnaKategori + " / " + altKategori;
             baslikAlani.innerText = altKategori;
             icerikAlani.innerHTML = "<p>Lezzetler yükleniyor...</p>";
 
@@ -663,56 +683,89 @@
                 }
 
                 let htmlIcerik = "";
+                
                 querySnapshot.forEach((doc) => {
                     const veri = doc.data();
                     
                     htmlIcerik += `<div class="clearfix" style="margin-bottom: 60px; padding-bottom: 40px; border-bottom: 2px solid #f1f1f1;">`;
                     htmlIcerik += `<h3 style="color:#c0392b; font-size:28px; margin-bottom:20px; font-family: 'Playfair Display', serif;">${veri.baslik}</h3>`;
                     
-                    // 1. GELİŞMİŞ FOTOĞRAF DÜZENİ
-                    if(veri.fotograflar && veri.fotograflar.length > 0) {
+                    // --- 1. YENİ MODÜLER SİSTEM OKUYUCUSU ---
+                    if (veri.moduller && veri.moduller.length > 0) {
                         let ikiliGrup = [];
                         
-                        veri.fotograflar.forEach((foto, index) => {
-                            if(foto.duzen === 'ikili') {
-                                ikiliGrup.push(foto.url);
-                                // İki tane olduğunda veya sonuncu olduğunda bas
-                                if(ikiliGrup.length === 2 || index === veri.fotograflar.length - 1) {
-                                    htmlIcerik += `<div class="foto-ikili-container">`;
-                                    ikiliGrup.forEach(u => htmlIcerik += `<img src="${u}" class="foto-ikili">`);
-                                    htmlIcerik += `</div>`;
-                                    ikiliGrup = [];
+                        veri.moduller.forEach((modul, index) => {
+                            if (modul.tip === 'baslik') {
+                                htmlIcerik += `<h4 style="color:#2980b9; margin-top:30px; margin-bottom:15px; font-size: 22px;">${modul.icerik}</h4>`;
+                            } 
+                            else if (modul.tip === 'metin') {
+                                htmlIcerik += `<p style="font-size:17px; line-height:1.8; color: #333; margin-bottom: 20px; white-space: pre-wrap;">${modul.icerik}</p>`;
+                            } 
+                            else if (modul.tip === 'foto') {
+                                if (modul.duzen === 'ikili') {
+                                    ikiliGrup.push(modul.url);
+                                    let sonrakiModulIkilimi = veri.moduller[index + 1] && veri.moduller[index + 1].tip === 'foto' && veri.moduller[index + 1].duzen === 'ikili';
+                                    
+                                    if (ikiliGrup.length === 2 || !sonrakiModulIkilimi) {
+                                        htmlIcerik += `<div class="foto-ikili-container">`;
+                                        ikiliGrup.forEach(u => htmlIcerik += `<img src="${u}" class="foto-ikili">`);
+                                        htmlIcerik += `</div>`;
+                                        ikiliGrup = [];
+                                    }
+                                } else {
+                                    htmlIcerik += `<img src="${modul.url}" class="foto-${modul.duzen}">`;
                                 }
-                            } else {
-                                htmlIcerik += `<img src="${foto.url}" class="foto-${foto.duzen}">`;
+                            } 
+                            else if (modul.tip === 'buton') {
+                                htmlIcerik += `<div class="btn-grup" style="margin-bottom: 20px;">`;
+                                htmlIcerik += `<a href="${modul.link}" target="_blank" class="ozel-btn" style="background-color: ${modul.renk}">${modul.isim}</a>`;
+                                htmlIcerik += `</div>`;
                             }
                         });
-                    } else if(veri.gorsel_url) { // Eski veriler için koruma
-                        htmlIcerik += `<img src="${veri.gorsel_url}" class="foto-orta">`;
-                    }
-                    
-                    // 2. ANA METİN
-                    htmlIcerik += `<p style="font-size:17px; line-height:1.8; color: #333; white-space: pre-wrap;">${veri.ana_metin}</p>`;
+                    } 
+                    // --- 2. ESKİ SİSTEM OKUYUCUSU (Geriye Dönük Uyumluluk) ---
+                    else {
+                        if(veri.fotograflar && veri.fotograflar.length > 0) {
+                            let ikiliGrup = [];
+                            veri.fotograflar.forEach((foto, index) => {
+                                if(foto.duzen === 'ikili') {
+                                    ikiliGrup.push(foto.url);
+                                    if(ikiliGrup.length === 2 || index === veri.fotograflar.length - 1) {
+                                        htmlIcerik += `<div class="foto-ikili-container">`;
+                                        ikiliGrup.forEach(u => htmlIcerik += `<img src="${u}" class="foto-ikili">`);
+                                        htmlIcerik += `</div>`;
+                                        ikiliGrup = [];
+                                    }
+                                } else {
+                                    htmlIcerik += `<img src="${foto.url}" class="foto-${foto.duzen}">`;
+                                }
+                            });
+                        } else if(veri.gorsel_url) { 
+                            htmlIcerik += `<img src="${veri.gorsel_url}" class="foto-orta">`;
+                        }
+                        
+                        if(veri.ana_metin) {
+                            htmlIcerik += `<p style="font-size:17px; line-height:1.8; color: #333; white-space: pre-wrap; margin-bottom: 20px;">${veri.ana_metin}</p>`;
+                        }
 
-                    // 3. ALT BAŞLIKLAR VE PARAGRAFLAR
-                    if(veri.ekstra_icerikler) {
-                        veri.ekstra_icerikler.forEach(ekstra => {
-                            htmlIcerik += `<h4 style="color:#2980b9; margin-top:25px; font-size: 20px;">${ekstra.altBaslik}</h4>`;
-                            htmlIcerik += `<p style="white-space: pre-wrap;">${ekstra.icerik}</p>`;
-                        });
-                    }
+                        if(veri.ekstra_icerikler) {
+                            veri.ekstra_icerikler.forEach(ekstra => {
+                                htmlIcerik += `<h4 style="color:#2980b9; margin-top:25px; margin-bottom:15px; font-size: 20px;">${ekstra.altBaslik}</h4>`;
+                                htmlIcerik += `<p style="white-space: pre-wrap; line-height:1.8; margin-bottom: 20px;">${ekstra.icerik}</p>`;
+                            });
+                        }
 
-                    // 4. ÇOKLU VE RENKLİ BUTONLAR
-                    if(veri.butonlar && veri.butonlar.length > 0) {
-                        htmlIcerik += `<div class="btn-grup">`;
-                        veri.butonlar.forEach(b => {
-                            htmlIcerik += `<a href="${b.link}" target="_blank" class="ozel-btn" style="background-color: ${b.renk}">${b.isim}</a>`;
-                        });
-                        htmlIcerik += `</div>`;
-                    } else if(veri.link) { // Eski veriler için koruma
-                        htmlIcerik += `<div class="btn-grup">`;
-                        htmlIcerik += `<a href="${veri.link}" target="_blank" class="ozel-btn" style="background-color: #e67e22">${veri.link_isim || 'Tıkla ve Git'}</a>`;
-                        htmlIcerik += `</div>`;
+                        if(veri.butonlar && veri.butonlar.length > 0) {
+                            htmlIcerik += `<div class="btn-grup" style="margin-bottom: 20px;">`;
+                            veri.butonlar.forEach(b => {
+                                htmlIcerik += `<a href="${b.link}" target="_blank" class="ozel-btn" style="background-color: ${b.renk}">${b.isim}</a>`;
+                            });
+                            htmlIcerik += `</div>`;
+                        } else if(veri.link) { 
+                            htmlIcerik += `<div class="btn-grup" style="margin-bottom: 20px;">`;
+                            htmlIcerik += `<a href="${veri.link}" target="_blank" class="ozel-btn" style="background-color: #e67e22">${veri.link_isim || 'Tıkla ve Git'}</a>`;
+                            htmlIcerik += `</div>`;
+                        }
                     }
 
                     htmlIcerik += `</div>`;
