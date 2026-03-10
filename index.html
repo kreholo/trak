@@ -414,170 +414,8 @@
         </div>
         <div class="mobile-menu-btn" onclick="window.toggleMobileNav()">☰ MENÜ</div>
         
-        <nav id="mainNav">
-            <ul class="menu-item">
-                <a class="menu-link" onclick="window.toggleDropdown(event, this)">Edirne</a>
-                <ul class="dropdown">
-                    <li><a onclick="window.icerikGetir('Edirne', 'Edirne Hakkında')">Edirne Hakkında</a></li>
-                    <li><a onclick="window.icerikGetir('Edirne', 'Coğrafi İşaretli Ürünler')">Coğrafi İşaretli Ürünler</a></li>
-                    <li><a onclick="window.icerikGetir('Edirne', 'Edirne Lezzet Durakları')">Edirne Lezzet Durakları</a></li>
-                    <li>
-                        <a class="sub-menu-indicator" onclick="window.toggleSubmenu(event, this)">Edirne Mutfağı</a>
-                        <ul class="dropdown-submenu">
-                            <li><a onclick="window.icerikGetir('Edirne', 'Et Yemekleri')">Et Yemekleri</a></li>
-                            <li><a onclick="window.icerikGetir('Edirne', 'Sebze Yemekleri')">Sebze Yemekleri</a></li>
-                            <li><a onclick="window.icerikGetir('Edirne', 'Hamur İşleri')">Hamur İşleri</a></li>
-                            <li><a onclick="window.icerikGetir('Edirne', 'Pilavlar')">Pilavlar</a></li>
-                            <li><a onclick="window.icerikGetir('Edirne', 'Salatalar ve Mezeler')">Salatalar ve Mezeler</a></li>
-                            <li><a onclick="window.icerikGetir('Edirne', 'Tatlılar')">Tatlılar</a></li>
-                            <li><a onclick="window.icerikGetir('Edirne', 'İçecekler')">İçecekler</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </ul>
-
-            <ul class="menu-item">
-                <a class="menu-link" onclick="window.toggleDropdown(event, this)">Tekirdağ</a>
-                <ul class="dropdown">
-                    <li><a onclick="window.icerikGetir('Tekirdağ', 'Tekirdağ Hakkında')">Tekirdağ Hakkında</a></li>
-                    <li><a onclick="window.icerikGetir('Tekirdağ', 'Coğrafi İşaretli Ürünler')">Coğrafi İşaretli Ürünler</a></li>
-                    <li><a onclick="window.icerikGetir('Tekirdağ', 'Tekirdağ Lezzet Durakları')">Tekirdağ Lezzet Durakları</a></li>
-                    <li>
-                        <a class="sub-menu-indicator" onclick="window.toggleSubmenu(event, this)">Tekirdağ Mutfağı</a>
-                        <ul class="dropdown-submenu">
-                            <li><a onclick="window.icerikGetir('Tekirdağ', 'Et Yemekleri')">Et Yemekleri</a></li>
-                            <li><a onclick="window.icerikGetir('Tekirdağ', 'Sebze Yemekleri')">Sebze Yemekleri</a></li>
-                            <li><a onclick="window.icerikGetir('Tekirdağ', 'Hamur İşleri')">Hamur İşleri</a></li>
-                            <li><a onclick="window.icerikGetir('Tekirdağ', 'Pilavlar')">Pilavlar</a></li>
-                            <li><a onclick="window.icerikGetir('Tekirdağ', 'Salatalar ve Mezeler')">Salatalar ve Mezeler</a></li>
-                            <li><a onclick="window.icerikGetir('Tekirdağ', 'Tatlılar')">Tatlılar</a></li>
-                            <li><a onclick="window.icerikGetir('Tekirdağ', 'İçecekler')">İçecekler</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </ul>
-
-            <ul class="menu-item">
-                <a class="menu-link" onclick="window.toggleDropdown(event, this)">Kırklareli</a>
-                <ul class="dropdown">
-                    <li><a onclick="window.icerikGetir('Kırklareli', 'Kırklareli Hakkında')">Kırklareli Hakkında</a></li>
-                    <li><a onclick="window.icerikGetir('Kırklareli', 'Coğrafi İşaretli Ürünler')">Coğrafi İşaretli Ürünler</a></li>
-                    <li><a onclick="window.icerikGetir('Kırklareli', 'Kırklareli Lezzet Durakları')">Kırklareli Lezzet Durakları</a></li>
-                    <li>
-                        <a class="sub-menu-indicator" onclick="window.toggleSubmenu(event, this)">Kırklareli Mutfağı</a>
-                        <ul class="dropdown-submenu">
-                            <li><a onclick="window.icerikGetir('Kırklareli', 'Et Yemekleri')">Et Yemekleri</a></li>
-                            <li><a onclick="window.icerikGetir('Kırklareli', 'Sebze Yemekleri')">Sebze Yemekleri</a></li>
-                            <li><a onclick="window.icerikGetir('Kırklareli', 'Hamur İşleri')">Hamur İşleri</a></li>
-                            <li><a onclick="window.icerikGetir('Kırklareli', 'Pilavlar')">Pilavlar</a></li>
-                            <li><a onclick="window.icerikGetir('Kırklareli', 'Salatalar ve Mezeler')">Salatalar ve Mezeler</a></li>
-                            <li><a onclick="window.icerikGetir('Kırklareli', 'Tatlılar')">Tatlılar</a></li>
-                            <li><a onclick="window.icerikGetir('Kırklareli', 'İçecekler')">İçecekler</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </ul>
-
-            <ul class="menu-item">
-                <a class="menu-link" onclick="window.toggleDropdown(event, this)">Çanakkale</a>
-                <ul class="dropdown">
-                    <li><a onclick="window.icerikGetir('Çanakkale', 'Çanakkale Hakkında')">Çanakkale Hakkında</a></li>
-                    <li><a onclick="window.icerikGetir('Çanakkale', 'Coğrafi İşaretli Ürünler')">Coğrafi İşaretli Ürünler</a></li>
-                    <li><a onclick="window.icerikGetir('Çanakkale', 'Çanakkale Lezzet Durakları')">Çanakkale Lezzet Durakları</a></li>
-                    <li>
-                        <a class="sub-menu-indicator" onclick="window.toggleSubmenu(event, this)">Çanakkale Mutfağı</a>
-                        <ul class="dropdown-submenu">
-                            <li><a onclick="window.icerikGetir('Çanakkale', 'Et Yemekleri')">Et Yemekleri</a></li>
-                            <li><a onclick="window.icerikGetir('Çanakkale', 'Sebze Yemekleri')">Sebze Yemekleri</a></li>
-                            <li><a onclick="window.icerikGetir('Çanakkale', 'Hamur İşleri')">Hamur İşleri</a></li>
-                            <li><a onclick="window.icerikGetir('Çanakkale', 'Pilavlar')">Pilavlar</a></li>
-                            <li><a onclick="window.icerikGetir('Çanakkale', 'Salatalar ve Mezeler')">Salatalar ve Mezeler</a></li>
-                            <li><a onclick="window.icerikGetir('Çanakkale', 'Tatlılar')">Tatlılar</a></li>
-                            <li><a onclick="window.icerikGetir('Çanakkale', 'İçecekler')">İçecekler</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </ul>
-
-            <ul class="menu-item">
-                <a class="menu-link" onclick="window.toggleDropdown(event, this)">Sakin Şehirler</a>
-                <ul class="dropdown">
-                    <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Sakin Şehirler Hakkında')">Sakin Şehirler Hakkında</a></li>
-                    <li>
-                        <a class="sub-menu-indicator" onclick="window.toggleSubmenu(event, this)">Sakin Şehirler</a>
-                        <ul class="dropdown-submenu">
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Gökçeada, Çanakkale')">Gökçeada, Çanakkale</a></li>
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Foça, İzmir')">Foça, İzmir</a></li>
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Seferihisar, İzmir')">Seferihisar, İzmir</a></li>
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Şarköy, Tekirdağ')">Şarköy, Tekirdağ</a></li>
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Vize, Kırklareli')">Vize, Kırklareli</a></li>
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Yenipazar, Aydın')">Yenipazar, Aydın</a></li>
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Akyaka, Muğla')">Akyaka, Muğla</a></li>
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Köyceğiz, Muğla')">Köyceğiz, Muğla</a></li>
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Çameli, Denizli')">Çameli, Denizli</a></li>
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'İznik, Bursa')">İznik, Bursa</a></li>
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Demre, Antalya')">Demre, Antalya</a></li>
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Finike, Antalya')">Finike, Antalya</a></li>
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Göynük, Bolu')">Göynük, Bolu</a></li>
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Mudurnu, Bolu')">Mudurnu, Bolu</a></li>
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Yalvaç, Isparta')">Yalvaç, Isparta</a></li>
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'İbradı, Antalya')">İbradı, Antalya</a></li>
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Eğirdir, Isparta')">Eğirdir, Isparta</a></li>
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Güdül, Ankara')">Güdül, Ankara</a></li>
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Safranbolu, Karabük')">Safranbolu, Karabük</a></li>
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Daday, Kastamonu')">Daday, Kastamonu</a></li>
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Gerze, Sinop')">Gerze, Sinop</a></li>
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Perşembe, Ordu')">Perşembe, Ordu</a></li>
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Halfeti, Şanlıurfa')">Halfeti, Şanlıurfa</a></li>
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Arapgir, Malatya')">Arapgir, Malatya</a></li>
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Kemaliye, Erzincan')">Kemaliye, Erzincan</a></li>
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Uzundere, Erzurum')">Uzundere, Erzurum</a></li>
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Şavşat, Artvin')">Şavşat, Artvin</a></li>
-                            <li><a onclick="window.icerikGetir('Sakin_Sehirler', 'Ahlat, Bitlis')">Ahlat, Bitlis</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </ul>
-
-            <ul class="menu-item">
-                <a class="menu-link" onclick="window.toggleDropdown(event, this)">Türk Mutfağı</a>
-                <ul class="dropdown">
-                    <li><a onclick="window.icerikGetir('Turk_Mutfagi', 'Türk Mutfağı Hakkında')">Türk Mutfağı Hakkında</a></li>
-                    <li><a onclick="window.icerikGetir('Turk_Mutfagi', 'Coğrafi İşaretli Ürünler')">Coğrafi İşaretli Ürünler</a></li>
-                    <li><a onclick="window.icerikGetir('Turk_Mutfagi', 'Lezzet Durakları')">Lezzet Durakları</a></li>
-                    <li>
-                        <a class="sub-menu-indicator" onclick="window.toggleSubmenu(event, this)">Türk Mutfağından Seçmeler</a>
-                        <ul class="dropdown-submenu">
-                            <li><a onclick="window.icerikGetir('Turk_Mutfagi', 'Et Yemekleri')">Et Yemekleri</a></li>
-                            <li><a onclick="window.icerikGetir('Turk_Mutfagi', 'Sebze Yemekleri')">Sebze Yemekleri</a></li>
-                            <li><a onclick="window.icerikGetir('Turk_Mutfagi', 'Hamur İşleri')">Hamur İşleri</a></li>
-                            <li><a onclick="window.icerikGetir('Turk_Mutfagi', 'Pilavlar')">Pilavlar</a></li>
-                            <li><a onclick="window.icerikGetir('Turk_Mutfagi', 'Salatalar ve Mezeler')">Salatalar ve Mezeler</a></li>
-                            <li><a onclick="window.icerikGetir('Turk_Mutfagi', 'Tatlılar')">Tatlılar</a></li>
-                            <li><a onclick="window.icerikGetir('Turk_Mutfagi', 'İçecekler')">İçecekler</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </ul>
-
-            <ul class="menu-item">
-                <a class="menu-link" onclick="window.toggleDropdown(event, this)">Dünya Mutfağı</a>
-                <ul class="dropdown">
-                    <li>
-                        <a class="sub-menu-indicator" onclick="window.toggleSubmenu(event, this)">Dünya Mutfağından Seçmeler</a>
-                        <ul class="dropdown-submenu">
-                            <li><a onclick="window.icerikGetir('Dunya_Mutfagi', 'Et Yemekleri')">Et Yemekleri</a></li>
-                            <li><a onclick="window.icerikGetir('Dunya_Mutfagi', 'Sebze Yemekleri')">Sebze Yemekleri</a></li>
-                            <li><a onclick="window.icerikGetir('Dunya_Mutfagi', 'Hamur İşleri')">Hamur İşleri</a></li>
-                            <li><a onclick="window.icerikGetir('Dunya_Mutfagi', 'Pilavlar')">Pilavlar</a></li>
-                            <li><a onclick="window.icerikGetir('Dunya_Mutfagi', 'Salatalar ve Mezeler')">Salatalar ve Mezeler</a></li>
-                            <li><a onclick="window.icerikGetir('Dunya_Mutfagi', 'Tatlılar')">Tatlılar</a></li>
-                            <li><a onclick="window.icerikGetir('Dunya_Mutfagi', 'İçecekler')">İçecekler</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </ul>
-        </nav>
+    <nav id="mainNav">
+            </nav>
     </header>
 
     <section class="hero" id="hero-section">
@@ -605,8 +443,8 @@
         <p>&copy; 2026 Trakya Mutfağı ve Lezzet Durakları. Tüm Hakları Saklıdır.</p>
     </footer>
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getFirestore, collection, query, where, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDKWEvPGCcjecP-r4MceBudchDRX2QdaJA",
@@ -650,7 +488,82 @@
         window.anaSayfayaDon = function() {
             location.reload();
         };
+// ⚡ FİREBASE'DEN DİNAMİK MENÜ ÇEKME VE ÇİZME ZEKASI ⚡
+        window.menuyuYukle = async function() {
+            try {
+                // Panelde oluşturduğumuz v4 menüsünü çekiyoruz
+                const docRef = doc(db, "ayarlar", "menuler_v4");
+                const docSnap = await getDoc(docRef);
 
+                if (docSnap.exists()) {
+                    const kategoriler = docSnap.data();
+                    const nav = document.getElementById('mainNav');
+                    nav.innerHTML = ''; // Önce içi temizlensin
+
+                    // 1. SEVİYE (Şehirler / Ana Başlıklar)
+                    for (const [anaKat, altKatObjesi] of Object.entries(kategoriler)) {
+                        let anaUl = document.createElement('ul');
+                        anaUl.className = 'menu-item';
+                        
+                        let anaA = document.createElement('a');
+                        anaA.className = 'menu-link';
+                        anaA.innerText = anaKat.replace(/_/g, ' ');
+                        anaA.onclick = function(e) { window.toggleDropdown(e, this); };
+                        anaUl.appendChild(anaA);
+
+                        let dropdownUl = document.createElement('ul');
+                        dropdownUl.className = 'dropdown';
+
+                        // 2. SEVİYE (Edirne Mutfağı, Tarihi Yerler vb.)
+                        for (const [altKatAdi, altAltDizisi] of Object.entries(altKatObjesi)) {
+                            let altLi = document.createElement('li');
+
+                            // Eğer bunun alt menüsü yoksa (Örn: Edirne Hakkında) direkt tıklandığında içeriği getirir
+                            if (altAltDizisi.length === 0) {
+                                let altA = document.createElement('a');
+                                altA.innerText = altKatAdi;
+                                altA.onclick = function() { window.icerikGetir(anaKat, altKatAdi); };
+                                altLi.appendChild(altA);
+                            } 
+                            // Eğer alt menüsü varsa (Örn: Et Yemekleri, Çorbalar) 3. seviyeyi açar
+                            else {
+                                let altA = document.createElement('a');
+                                altA.className = 'sub-menu-indicator';
+                                altA.innerText = altKatAdi;
+                                altA.onclick = function(e) { window.toggleSubmenu(e, this); };
+                                altLi.appendChild(altA);
+
+                                let submenuUl = document.createElement('ul');
+                                submenuUl.className = 'dropdown-submenu';
+
+                                // 3. SEVİYE
+                                altAltDizisi.forEach(enAlt => {
+                                    let enAltLi = document.createElement('li');
+                                    let enAltA = document.createElement('a');
+                                    enAltA.innerText = enAlt;
+                                    // 3. Seviyeye tıklandığında içeriği getirir (Kategori: Edirne, Alt: Et Yemekleri şeklinde arar)
+                                    enAltA.onclick = function() { window.icerikGetir(anaKat, enAlt); };
+                                    enAltLi.appendChild(enAltA);
+                                    submenuUl.appendChild(enAltLi);
+                                });
+                                altLi.appendChild(submenuUl);
+                            }
+                            dropdownUl.appendChild(altLi);
+                        }
+                        
+                        if(Object.keys(altKatObjesi).length > 0){
+                            anaUl.appendChild(dropdownUl);
+                        }
+                        nav.appendChild(anaUl);
+                    }
+                }
+            } catch (error) {
+                console.error("Menü yüklenirken hata oluştu:", error);
+            }
+        };
+
+        // Sayfa açıldığında bu menü çiziciyi otomatik çalıştır
+        window.menuyuYukle();
         // VERİ ÇEKME VE GÖSTERME (MODÜLER SİSTEM)
         window.icerikGetir = async function(anaKategori, altKategori) {
             // Mobilde menüyü kapat
