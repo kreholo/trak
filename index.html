@@ -488,7 +488,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebas
         window.anaSayfayaDon = function() {
             location.reload();
         };
-// ⚡ GÜNCELLENMİŞ: EKLEME SIRASINA GÖRE (SIRALAMASIZ) MENÜ ⚡
+// ⚡ GÜNCELLENMİŞ: NUMARALI SIRALAMA ZEKASI ⚡
         window.menuyuYukle = async function() {
             try {
                 const docRef = doc(db, "ayarlar", "menuler_v4");
@@ -498,51 +498,63 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebas
                     const kategoriler = docSnap.data();
                     navMenu.innerHTML = ''; 
 
-                    // Artık .sort() kullanmıyoruz, Firebase'den nasıl gelirse öyle dizilecek
-                    const anaKategoriListesi = Object.keys(kategoriler);
+                    // 1. Ana kategorileri numarasına göre diziyoruz (1, 2, 3...)
+                    const siraliAnaKategoriler = Object.keys(kategoriler).sort((a, b) => a.localeCompare(b, 'tr', {numeric: true}));
 
-                    anaKategoriListesi.forEach(anaKat => {
+                    siraliAnaKategoriler.forEach(anaKat => {
                         const altKatObjesi = kategoriler[anaKat];
                         
                         let anaUl = document.createElement('ul');
                         anaUl.className = 'menu-item';
                         
+                        // VİTRİN İÇİN NUMARAYI GİZLE (Örn: "1-Edirne" -> "Edirne" görünür)
+                        let gorunenAnaAd = anaKat.replace(/^[0-9]+-/, '').replace(/_/g, ' ');
+
                         let anaA = document.createElement('a');
                         anaA.className = 'menu-link';
-                        anaA.innerText = anaKat.replace(/_/g, ' ');
+                        anaA.innerText = gorunenAnaAd;
                         anaA.onclick = function(e) { window.toggleDropdown(e, this); };
                         anaUl.appendChild(anaA);
 
                         let dropdownUl = document.createElement('ul');
                         dropdownUl.className = 'dropdown';
 
-                        // Alt kategoriler için de sıralamayı kaldırdık
-                        const altKategoriListesi = Object.keys(altKatObjesi);
+                        // 2. Alt kategorileri numarasına göre diziyoruz
+                        const siraliAltKategoriler = Object.keys(altKatObjesi).sort((a, b) => a.localeCompare(b, 'tr', {numeric: true}));
 
-                        altKategoriListesi.forEach(altKatAdi => {
+                        siraliAltKategoriler.forEach(altKatAdi => {
                             const altAltDizisi = altKatObjesi[altKatAdi];
                             let altLi = document.createElement('li');
+                            
+                            // VİTRİN İÇİN NUMARAYI GİZLE (Örn: "1-Çorbalar" -> "Çorbalar")
+                            let gorunenAltAd = altKatAdi.replace(/^[0-9]+-/, '');
 
                             if (altAltDizisi.length === 0) {
                                 let altA = document.createElement('a');
-                                altA.innerText = altKatAdi;
+                                altA.innerText = gorunenAltAd;
                                 altA.onclick = function() { window.icerikGetir(anaKat, altKatAdi); };
                                 altLi.appendChild(altA);
                             } else {
                                 let altA = document.createElement('a');
                                 altA.className = 'sub-menu-indicator';
-                                altA.innerText = altKatAdi;
+                                altA.innerText = gorunenAltAd;
                                 altA.onclick = function(e) { window.toggleSubmenu(e, this); };
                                 altLi.appendChild(altA);
 
                                 let submenuUl = document.createElement('ul');
                                 submenuUl.className = 'dropdown-submenu';
 
-                                // 3. Seviye dizileri (Et Yemekleri vb.) için de sıralamayı kaldırdık
-                                altAltDizisi.forEach(enAlt => {
+                                // 3. Seviyeleri (Yemek isimlerini) numarasına göre diziyoruz
+                                const siraliEnAlt = [...altAltDizisi].sort((a, b) => a.localeCompare(b, 'tr', {numeric: true}));
+
+                                siraliEnAlt.forEach(enAlt => {
                                     let enAltLi = document.createElement('li');
                                     let enAltA = document.createElement('a');
-                                    enAltA.innerText = enAlt;
+                                    
+                                    // VİTRİN İÇİN NUMARAYI GİZLE
+                                    let gorunenEnAltAd = enAlt.replace(/^[0-9]+-/, '');
+                                    
+                                    enAltA.innerText = gorunenEnAltAd;
                                     enAltA.onclick = function() { window.icerikGetir(anaKat, enAlt); };
                                     enAltLi.appendChild(enAltA);
                                     submenuUl.appendChild(enAltLi);
