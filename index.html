@@ -488,20 +488,22 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebas
         window.anaSayfayaDon = function() {
             location.reload();
         };
-// ⚡ FİREBASE'DEN DİNAMİK MENÜ ÇEKME VE ÇİZME ZEKASI ⚡
+// ⚡ GÜNCELLENMİŞ: EKLEME SIRASINA GÖRE (SIRALAMASIZ) MENÜ ⚡
         window.menuyuYukle = async function() {
             try {
-                // Panelde oluşturduğumuz v4 menüsünü çekiyoruz
                 const docRef = doc(db, "ayarlar", "menuler_v4");
                 const docSnap = await getDoc(docRef);
 
                 if (docSnap.exists()) {
                     const kategoriler = docSnap.data();
-                    const nav = document.getElementById('mainNav');
-                    nav.innerHTML = ''; // Önce içi temizlensin
+                    navMenu.innerHTML = ''; 
 
-                    // 1. SEVİYE (Şehirler / Ana Başlıklar)
-                    for (const [anaKat, altKatObjesi] of Object.entries(kategoriler)) {
+                    // Artık .sort() kullanmıyoruz, Firebase'den nasıl gelirse öyle dizilecek
+                    const anaKategoriListesi = Object.keys(kategoriler);
+
+                    anaKategoriListesi.forEach(anaKat => {
+                        const altKatObjesi = kategoriler[anaKat];
+                        
                         let anaUl = document.createElement('ul');
                         anaUl.className = 'menu-item';
                         
@@ -514,19 +516,19 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebas
                         let dropdownUl = document.createElement('ul');
                         dropdownUl.className = 'dropdown';
 
-                        // 2. SEVİYE (Edirne Mutfağı, Tarihi Yerler vb.)
-                        for (const [altKatAdi, altAltDizisi] of Object.entries(altKatObjesi)) {
+                        // Alt kategoriler için de sıralamayı kaldırdık
+                        const altKategoriListesi = Object.keys(altKatObjesi);
+
+                        altKategoriListesi.forEach(altKatAdi => {
+                            const altAltDizisi = altKatObjesi[altKatAdi];
                             let altLi = document.createElement('li');
 
-                            // Eğer bunun alt menüsü yoksa (Örn: Edirne Hakkında) direkt tıklandığında içeriği getirir
                             if (altAltDizisi.length === 0) {
                                 let altA = document.createElement('a');
                                 altA.innerText = altKatAdi;
                                 altA.onclick = function() { window.icerikGetir(anaKat, altKatAdi); };
                                 altLi.appendChild(altA);
-                            } 
-                            // Eğer alt menüsü varsa (Örn: Et Yemekleri, Çorbalar) 3. seviyeyi açar
-                            else {
+                            } else {
                                 let altA = document.createElement('a');
                                 altA.className = 'sub-menu-indicator';
                                 altA.innerText = altKatAdi;
@@ -536,12 +538,11 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebas
                                 let submenuUl = document.createElement('ul');
                                 submenuUl.className = 'dropdown-submenu';
 
-                                // 3. SEVİYE
+                                // 3. Seviye dizileri (Et Yemekleri vb.) için de sıralamayı kaldırdık
                                 altAltDizisi.forEach(enAlt => {
                                     let enAltLi = document.createElement('li');
                                     let enAltA = document.createElement('a');
                                     enAltA.innerText = enAlt;
-                                    // 3. Seviyeye tıklandığında içeriği getirir (Kategori: Edirne, Alt: Et Yemekleri şeklinde arar)
                                     enAltA.onclick = function() { window.icerikGetir(anaKat, enAlt); };
                                     enAltLi.appendChild(enAltA);
                                     submenuUl.appendChild(enAltLi);
@@ -549,13 +550,13 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebas
                                 altLi.appendChild(submenuUl);
                             }
                             dropdownUl.appendChild(altLi);
-                        }
+                        });
                         
                         if(Object.keys(altKatObjesi).length > 0){
                             anaUl.appendChild(dropdownUl);
                         }
-                        nav.appendChild(anaUl);
-                    }
+                        navMenu.appendChild(anaUl);
+                    });
                 }
             } catch (error) {
                 console.error("Menü yüklenirken hata oluştu:", error);
